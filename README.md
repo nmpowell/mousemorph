@@ -10,7 +10,8 @@ The primary distinction from clinically-focussed tools like [SPM]() and [FSL]() 
 - Orientation to a standard space, from any initial orientation
 - Mouse brain extraction (skull stripping / brain masking)
 - Tissue segmentation
-Many of these are atlas-based, and there we rely on previously-published work.
+
+Many of these steps are atlas-based, (requiring prior knowledge).
 
 MouseMorph is open-source, cross-platform, and written in Python (it relies upon several separate tools).
 
@@ -27,4 +28,5 @@ Links
 -----
 - [UCL Centre for Medical Image Computing (CMIC)](http://cmic.cs.ucl.ac.uk/)
 - [UCL Centre for Advanced Biomedical Imaging (CABI)](http://www.ucl.ac.uk/cabi)
-- 
+- [NUS Mouse Atlas (Singapore)](http://www.bioeng.nus.edu.sg/cfa/mouse_atlas.html)
+- [MRM NeAt Mouse Atlas (Florida)](http://brainatlas.mbi.ufl.edu/)
