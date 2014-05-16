@@ -11,9 +11,9 @@ The primary distinction from clinically-focussed tools like [SPM]() and [FSL]() 
 - Mouse brain extraction (skull stripping / brain masking)
 - Tissue segmentation
 
-Many of these steps are atlas-based (requiring prior knowledge). Mouse atlases are freely available to download (see links below). For a further introduction, see the [poster]().
+Many of these steps are atlas-based (requiring prior knowledge). A few mouse atlases are freely available to download (see links below). For a further introduction, see the [**poster**]().
 
-MouseMorph is open-source, cross-platform, and written in Python (its dependencies are listed under "Installation").
+MouseMorph is open-source, cross-platform, and written in Python.
 
 Developed at the [UCL Centre for Medical Image Computing (**CMIC**)](http://cmic.cs.ucl.ac.uk/) and the [UCL Centre for Advanced Biomedical Imaging (**CABI**)](http://www.ucl.ac.uk/cabi) by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
 
@@ -22,17 +22,19 @@ Developed at the [UCL Centre for Medical Image Computing (**CMIC**)](http://cmic
 2. Download MouseMorph
 3. Download a mouse atlas
 
-## Download the mouse brain data
+## Download wild-type mouse brain data
 
 
 ## Links
 - [UCL Centre for Medical Image Computing (CMIC)](http://cmic.cs.ucl.ac.uk/)
 - [UCL Centre for Advanced Biomedical Imaging (CABI)](http://www.ucl.ac.uk/cabi)
-### CMIC software:
+
+CMIC software:
 - [NiftyReg](http://sourceforge.net/projects/niftyreg/)
 - [NiftySeg](http://sourceforge.net/projects/niftyseg/)
 - more [Nifty tools](http://cmic.cs.ucl.ac.uk/home/software/)
-### Mouse atlases:
+
+Mouse atlases:
 - [NUS Mouse Atlas (Singapore)](http://www.bioeng.nus.edu.sg/cfa/mouse_atlas.html)
 - [MRM NeAt Mouse Atlas (Florida)](http://brainatlas.mbi.ufl.edu/)
 
