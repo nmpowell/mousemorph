@@ -45,4 +45,4 @@ MouseMorph is distributed under the [BSD 3-clause license](LICENSE).
 
 
 
-[ashburn_vbm_2000]: www.fil.ion.ucl.ac.uk/~karl/Voxel-Based%20Morphometry.pdf "Ashburner (2000): Voxel-Based Morphometry: The Methods (PDF)"
+[ashburn_vbm_2000]: http://www.fil.ion.ucl.ac.uk/~karl/Voxel-Based%20Morphometry.pdf "Ashburner (2000): Voxel-Based Morphometry: The Methods (PDF)"
