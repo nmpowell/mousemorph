@@ -11,7 +11,7 @@ The primary distinction from clinically-focussed tools like [SPM]() and [FSL]() 
 - Mouse brain extraction (skull stripping / brain masking)
 - Tissue segmentation
 
-Many of these steps are atlas-based (requiring prior knowledge). A few mouse atlases are freely available to download (see links below). For a further introduction, see the [**poster**](docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf). For a more detailed explanation, see the corresponding paper, [_**Fully-automated high-throughput phenotyping of mouse brains with µMRI, with application to the Tc1 model of Down syndrome**_](docs/paper.pdf)
+Many of these steps are atlas-based (requiring prior knowledge). A few mouse atlases are freely available to download (see links below). For a further introduction, see the [**poster**](docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf). For a more detailed explanation, see the accompanying paper, [_**Powell, N.M., Fully-automated high-throughput phenotyping of mouse brains with µMRI, with application to the Tc1 model of Down syndrome**_](docs/paper.pdf).
 
 MouseMorph is open-source, cross-platform, and written in Python. In addition to the code included in this repository, various elements from the corresponding [paper]() are open-source and available on [Figshare]().
 
