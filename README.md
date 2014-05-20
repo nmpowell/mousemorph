@@ -11,11 +11,13 @@ The primary distinction from clinically-focussed tools like [SPM]() and [FSL]() 
 - Mouse brain extraction (skull stripping / brain masking)
 - Tissue segmentation
 
-Many of these steps are atlas-based (requiring prior knowledge). A few mouse atlases are freely available to download (see links below). For a further introduction, see the [**poster**](docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf). For a more detailed explanation, see the accompanying paper, [_**Powell, N.M., Fully-automated high-throughput phenotyping of mouse brains with µMRI, with application to the Tc1 model of Down syndrome**_](docs/paper.pdf).
+Many of these steps are atlas-based (requiring prior knowledge). A few mouse atlases are freely available to download (see links below). For a further introduction, see the [**poster**](docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf). For a more detailed explanation, see the accompanying paper, [_**Powell, N.M., (2014) Fully-automated high-throughput phenotyping of mouse brains with µMRI, with application to the Tc1 model of Down syndrome**_](docs/paper.pdf).
 
 MouseMorph is open-source, cross-platform, and written in Python. In addition to the code included in this repository, various elements from the corresponding [paper]() are open-source and available on [Figshare]().
 
 Developed at the [UCL Centre for Medical Image Computing (**CMIC**)](http://cmic.cs.ucl.ac.uk/) and the [UCL Centre for Advanced Biomedical Imaging (**CABI**)](http://www.ucl.ac.uk/cabi) by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
+
+![MouseMorph poster thumbnail; click for PDF](docs/poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")
 
 ## Getting Started
 1. Set up Python
