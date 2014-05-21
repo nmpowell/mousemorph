@@ -5,6 +5,8 @@ Tools for MRI mouse brain morphometry.
 
 MouseMorph is a pipeline, or modular set of tools, for automatically analysing mouse brain MRI scans. It enables fully automatic [Voxel- and Tensor-Based Morphometry][ashb_vbm_2000] (VBM, TBM) on large cohorts of high-resolution images. It is employed at the UCL Centre for Advanced Biomedical Imaging (CABI) for [phenotyping](http://en.wikipedia.org/wiki/Phenotype) mice based on *in-vivo* and *ex-vivo* scans.
 
+[!result image: TBM] [!result image: VBM]
+
 The primary distinction from clinically-focussed tools like [SPM]() and [FSL]() is a robust set of pre-processing steps, unique to -- or with customisations for -- the preclinical paradigm:
 - Extraction of multiple subjects from a single scan image
 - Orientation to a standard space, from any initial orientation
@@ -17,7 +19,7 @@ MouseMorph is open-source, cross-platform, and written in Python. In addition to
 
 Developed at the [UCL Centre for Medical Image Computing (**CMIC**)](http://cmic.cs.ucl.ac.uk/) and the [UCL Centre for Advanced Biomedical Imaging (**CABI**)](http://www.ucl.ac.uk/cabi) by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
 
-Paper: [![MouseMorph paper thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph paper thumbnail; click for PDF")][mm_paper] Poster: [![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_paper]
+Paper: [![MouseMorph paper thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph paper thumbnail; click for PDF")][mm_paper] Poster: [![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster]
 
 ## Getting Started
 1. Set up Python
