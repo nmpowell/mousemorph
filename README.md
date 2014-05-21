@@ -17,7 +17,7 @@ MouseMorph is open-source, cross-platform, and written in Python. In addition to
 
 Developed at the [UCL Centre for Medical Image Computing (**CMIC**)](http://cmic.cs.ucl.ac.uk/) and the [UCL Centre for Advanced Biomedical Imaging (**CABI**)](http://www.ucl.ac.uk/cabi) by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
 
-[![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_paper] [![MouseMorph paper thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph paper thumbnail; click for PDF")][mm_paper]
+Paper: [![MouseMorph paper thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph paper thumbnail; click for PDF")][mm_paper] Poster: [![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_paper]
 
 ## Getting Started
 1. Set up Python
