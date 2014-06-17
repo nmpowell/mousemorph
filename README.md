@@ -8,12 +8,12 @@ MouseMorph is a pipeline, or modular set of tools, for automatically analysing m
 [!result image: TBM] [!result image: VBM]
 
 The primary distinction from clinically-focussed tools like [SPM]() and [FSL]() is a robust set of pre-processing steps, unique to -- or with customisations for -- the preclinical paradigm:
-- Extraction of multiple subjects from a single scan image
+- Identification and extraction of multiple subjects from a single scan image
 - Orientation to a standard space, from any initial orientation
 - Mouse brain extraction (skull stripping / brain masking)
 - Tissue segmentation
 
-Many of these steps are atlas-based (requiring prior knowledge). A few mouse atlases are freely available to download (see links below). For a further introduction, see the [**poster**][mm_poster]. For a more detailed explanation, see the accompanying paper, [_**Powell, N.M., (2014) Fully-automated high-throughput phenotyping of mouse brains with µMRI, with application to the Tc1 model of Down syndrome**_][mm_paper].
+Many of these steps are atlas-based (requiring prior knowledge). A few mouse atlases, fulfilling this requirement, are freely available to download (see links below). It is our aim to release more. For a further introduction, see the [**poster**][mm_poster]. For a more detailed explanation, see the accompanying paper, [_**Powell, N.M., (2014) Fully-automated high-throughput phenotyping of mouse brains with µMRI, with application to the Tc1 model of Down syndrome**_][mm_paper].
 
 MouseMorph is open-source, cross-platform, and written in Python. In addition to the code included in this repository, various elements from the corresponding [paper]() are open-source and available on [Figshare]().
 
