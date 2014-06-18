@@ -21,6 +21,9 @@ Developed at the [UCL Centre for Medical Image Computing (**CMIC**)](http://cmic
 
 Paper: [![MouseMorph paper thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph paper thumbnail; click for PDF")][mm_paper] Poster: [![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster]
 
+## Phenotyping
+If you are interested in using MouseMorph to assist a phenotyping study, please get in touch!
+
 ## Getting Started
 1. Set up Python
 2. Download MouseMorph
