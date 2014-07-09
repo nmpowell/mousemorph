@@ -15,7 +15,7 @@ The primary distinction from clinically-focussed tools like [SPM]() and [FSL]() 
 
 Many of these steps are atlas-based (requiring prior knowledge). A few mouse atlases, fulfilling this requirement, are freely available to download (see links below). It is our aim to release more. For a further introduction, see the [**poster**][mm_poster]. For a more detailed explanation, see the accompanying paper, [_**Powell, N.M., (2014) Fully-automated high-throughput phenotyping of mouse brains with µMRI, with application to the Tc1 model of Down syndrome**_][mm_paper].
 
-MouseMorph is open-source, cross-platform, and written in Python. In addition to the code included in this repository, various elements from the corresponding [paper]() are open-source and available on [Figshare]().
+MouseMorph is open-source, cross-platform, and written in Python. It is designed with [NIfTI](http://nifti.nimh.nih.gov/) images in mind. In addition to the code included in this repository, various elements from the corresponding [paper]() are open-source and available on [Figshare]().
 
 Developed at the [UCL Centre for Medical Image Computing (**CMIC**)](http://cmic.cs.ucl.ac.uk/) and the [UCL Centre for Advanced Biomedical Imaging (**CABI**)](http://www.ucl.ac.uk/cabi) by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
 
