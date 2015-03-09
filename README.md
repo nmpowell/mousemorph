@@ -5,7 +5,7 @@ Tools for MRI mouse brain morphometry.
 
 MouseMorph is a modular set of tools for automatically analysing mouse brain MRI scans and NIfTI images. It enables fully automatic [Voxel- and Tensor-Based Morphometry][ashb_vbm_2000] (VBM, TBM) on large cohorts of high-resolution images. It is employed at the UCL Centre for Advanced Biomedical Imaging (CABI) for [phenotyping](http://en.wikipedia.org/wiki/Phenotype) mice based on *in-vivo* and *ex-vivo* MRI scans. It has been tested for robustness on hundreds of mouse brain scans, both *in vivo* and *ex vivo*.
 
-![Example mouse brain TBM result.](docs/ex_mouse_brain_TBM.png)
+![Example mouse brain TBM result.](docs/ex_mouse_brain_TBM_thumbnail.png)
 
 The primary distinction from clinically-focussed tools like [SPM](http://www.fil.ion.ucl.ac.uk/spm/) and [FSL](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/) is a robust set of pre-processing steps, unique to -- or with customisations for -- the preclinical paradigm (mice and rats):
 - Identification and extraction of multiple subjects from a single scan image
@@ -61,6 +61,5 @@ MouseMorph is distributed under the [BSD 3-clause license](LICENSE).
 
 
 [mm_paper]: docs/paper.pdf
-[im_TBM_example]: docs/ex_mouse_brain_TBM.png
 [mm_poster]: docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf
 [ashb_vbm_2000]: http://www.fil.ion.ucl.ac.uk/~karl/Voxel-Based%20Morphometry.pdf "(PDF) Ashburner (2000): Voxel-Based Morphometry --- The Methods"
