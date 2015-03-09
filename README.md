@@ -26,12 +26,13 @@ Developed at the [UCL Centre for Medical Image Computing (**CMIC**)][cmic] and t
 If you are interested in using MouseMorph to assist a phenotyping study, please get in touch!
 
 ## Links
-- [UCL Centre for Medical Image Computing (CMIC)](http://cmic.cs.ucl.ac.uk/)
-- [UCL Centre for Advanced Biomedical Imaging (CABI)](http://www.ucl.ac.uk/cabi)
+- [UCL Centre for Medical Image Computing (CMIC)][cmic]
+- [UCL Centre for Advanced Biomedical Imaging (CABI)][cabi]
 
 ### CMIC software
 - [NiftyReg](http://sourceforge.net/projects/niftyreg/)
 - [NiftySeg](http://sourceforge.net/projects/niftyseg/)
+- [Mouse brain parcellation](https://github.com/dancebean/multi-atlas-segmentation)
 - more [Nifty tools](http://cmic.cs.ucl.ac.uk/home/software/)
 
 ### Mouse atlases
