@@ -1,11 +1,11 @@
 MouseMorph
 ==========
 
+_We're not quite done here, but please get in touch if you are interested: nicholas.powell.11@ucl.ac.uk ..._
+
 Tools for MRI mouse brain morphometry.
 
 MouseMorph is a modular set of tools for automatically analysing mouse brain MRI scans and NIfTI images. It enables fully automatic [Voxel- and Tensor-Based Morphometry][ashb_vbm_2000] (VBM, TBM) on large cohorts of high-resolution images. It is employed at the UCL Centre for Advanced Biomedical Imaging (CABI) for [phenotyping](http://en.wikipedia.org/wiki/Phenotype) mice based on *in-vivo* and *ex-vivo* MRI scans. It has been tested for robustness on hundreds of mouse brain scans, both *in vivo* and *ex vivo*.
-
-_We're not quite done here, but please get in touch if you are interested._
 
 ![Example mouse brain TBM result.](docs/ex_mouse_brain_TBM_thumbnail.png)
 
@@ -20,10 +20,10 @@ Most of these steps are atlas-based (requiring prior knowledge). A few mouse atl
 
 Developed at the [UCL Centre for Medical Image Computing (**CMIC**)](http://cmic.cs.ucl.ac.uk/) and the [UCL Centre for Advanced Biomedical Imaging (**CABI**)](http://www.ucl.ac.uk/cabi) by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
 
-Poster: [![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster]
+[![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster]
 
 ## Phenotyping
-If you are interested in using MouseMorph to assist a phenotyping study, please get in touch, and see the citation information below.
+If you are interested in using MouseMorph to assist a phenotyping study, please get in touch!
 
 ## Links
 - [UCL Centre for Medical Image Computing (CMIC)](http://cmic.cs.ucl.ac.uk/)
