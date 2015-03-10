@@ -5,8 +5,9 @@ _We're not quite done here, but please get in touch if you are interested: nicho
 
 Tools for MRI mouse brain morphometry.
 
-MouseMorph is a modular set of tools for automatically analysing mouse brain MRI scans. It enables fully automatic [Voxel- and Tensor-Based Morphometry][ashb_vbm_2000] (VBM, TBM) on large cohorts of high-resolution images. It is employed at the UCL Centre for Advanced Biomedical Imaging (CABI) for [phenotyping](http://en.wikipedia.org/wiki/Phenotype) mice based on *in-vivo* and *ex-vivo* MRI scans. It has been tested for robustness on hundreds of mouse brain scans, both *in vivo* and *ex vivo*.
+MouseMorph is a modular set of tools for automatically analysing mouse brain MRI scans. It enables fully automatic [Voxel- and Tensor-Based Morphometry][ashb_vbm_2000] (VBM, TBM) on large cohorts of high-resolution images. It is employed at the UCL Centre for Advanced Biomedical Imaging (CABI) for [phenotyping](http://en.wikipedia.org/wiki/Phenotype) mice based on *in vivo* and *ex vivo* MRI scans. It has been tested for robustness on hundreds of mouse brain scans.
 
+![Pipeline summary](docs/pipeline_summary.png)
 ![Example mouse brain TBM result.](docs/ex_mouse_brain_TBM_thumbnail.png)
 
 The primary distinction from clinically-focussed tools like [SPM](http://www.fil.ion.ucl.ac.uk/spm/) and [FSL](http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/) is a robust set of pre-processing steps, unique to -- or with customisations for -- the preclinical paradigm (mice and rats):
