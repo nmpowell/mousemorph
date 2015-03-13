@@ -5,7 +5,7 @@ _We're not quite done here, but please get in touch if you are interested: nicho
 
 Tools for MRI mouse brain morphometry.
 
-MouseMorph is a modular set of tools for automatically analysing mouse brain MRI scans. It enables fully automatic [Voxel- and Tensor-Based Morphometry][ashb_vbm_2000] (VBM, TBM) on large cohorts of high-resolution images. It is employed at the UCL Centre for Advanced Biomedical Imaging (CABI) for [phenotyping](http://en.wikipedia.org/wiki/Phenotype) mice based on *in vivo* and *ex vivo* MRI scans. It has been tested for robustness on hundreds of mouse brain scans.
+MouseMorph is a modular set of tools for automatically analysing mouse brain MRI scans. It enables fully automatic [Voxel- and Tensor-Based Morphometry][ashb_vbm_2000] (VBM, TBM) on large cohorts of high-resolution images. It is employed at the UCL Centre for Advanced Biomedical Imaging ([CABI][cabi]) for [phenotyping](http://en.wikipedia.org/wiki/Phenotype) mice based on *in vivo* and *ex vivo* MRI. It has been tested for robustness on hundreds of mouse brain scans.
 
 [![Pipeline summary](docs/pipeline_summary.png)](docs/pipeline_summary.png)
 
@@ -13,7 +13,7 @@ The primary distinction from clinically-focussed tools like [SPM](http://www.fil
 - Identification and extraction of multiple subjects from a single scan image
 - Orientation to a standard space, from any initial orientation
 - Mouse brain extraction (skull stripping / brain masking)
-- Tissue segmentation
+- Tissue segmentation, using accurate, mouse-specific priors
 - Group-wise registration
 
 Most of these steps are atlas-based (requiring prior knowledge). A few mouse atlases, fulfilling this requirement, are freely available to download (see links below). We aim to release more. For a further introduction, see the [**poster**][mm_poster]. For links to open and free wild-type mouse brain MRI data, see below.
