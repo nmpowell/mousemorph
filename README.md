@@ -25,6 +25,9 @@ Developed at the [UCL Centre for Medical Image Computing (**CMIC**)][cmic] and t
 ## Phenotyping
 If you are interested in using MouseMorph to assist a phenotyping study, please get in touch!
 
+### Multiple mouse brain MRI
+- See the brain holder in this repository, or at [Figshare](https://figshare.com/articles/CABI_Mouse_Brain_Holder/1290771/1) (please cite: https://dx.doi.org/10.6084/m9.figshare.1290771.v1)
+
 ## Links
 - [UCL Centre for Medical Image Computing (CMIC)][cmic]
 - [UCL Centre for Advanced Biomedical Imaging (CABI)][cabi]
@@ -41,7 +44,7 @@ Multi-subject atlases are preferred.
 - [NUS Mouse Atlas (Singapore)](http://www.bioeng.nus.edu.sg/cfa/mouse_atlas.html)
 - [MRM NeAt Mouse Atlas (Florida)](http://brainatlas.mbi.ufl.edu/)
 
-© 2014 Nick Powell and [University College London](http://www.ucl.ac.uk/), UK
+Â© 2014 Nick Powell and [University College London](http://www.ucl.ac.uk/), UK
 
 [mm_poster]: docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf
 [cmic]: http://cmic.cs.ucl.ac.uk/ "UCL Centre for Medical Image Computing"
