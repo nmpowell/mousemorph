@@ -2,11 +2,13 @@
 
 """MouseMorph, an automatic mouse MR image processor
 
-This contains a number of simple image processing functions, as well as tools for working with large groups of NIfTI images.
+Simple image processing functions, and tools for working with groups of NIfTI images.
 
 With loop_and_save(), you can apply any compatible function to an entire directory of images.
 
-Several return either just the 3D data, [just the header], or a full NIfTI-1 image. In some cases this seems a bit tortuous. However, working with mm_multi.py, you can call these from the command line in a sequence you determine. It is therefore necessary for one function to be able to take input directly from the output of another.
+Most of these were composed to fulfil a specific need. All should work as expected (let me know if not), but some are ugly hacks to quickly process large numbers of files.
+
+Several return either a full NIfTI-1 image, just the 3D data, or just the header.
 
 """
 
@@ -20,21 +22,17 @@ import collections
 import numpy as np
 import pandas as pd
 import nibabel as nib
-
-import mm_niftk
-
-from scipy import ndimage, linalg
-
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 import matplotlib.cm as cm
 
+from scipy import ndimage, linalg
+
+import mm_niftk
+
 __author__ = 'Nick Powell (PhD student, CMIC & CABI, UCL, UK), nicholas.powell.11@ucl.ac.uk'
 __version__ = '0.2.20150212'
 __created__ = '2014-03-19, Wednesday'
-
-# Some polymorphism rather than writing multiple functions
-# --------------------------------------------------------
 
 def get_iterable( x ):
     """From: http://stackoverflow.com/a/6711233"""
@@ -204,14 +202,6 @@ def create_temp_directories(output_directory, temp_name="temp"):
     
     return temp_directory
     # End of create_temp_directories() definition
-    
-# def iterify(potentially_iterable):
-    # """Thanks, http://stackoverflow.com/a/6710895/3329384"""
-    # import collections
-    # if isinstance(collections.iterable, potentially_iterable):
-        
-    
-    # return iterable
     
 def check_create_directories( directory_list ):
     """Recursively creates directories input as a list."""
@@ -399,9 +389,6 @@ def load_nifti_save(input, function=None, output_filepath=None, overwrite=False,
 def loop_and_save( file_path_list, function=None, output_directory=None, output_subdirectory=None, out_name_prepend='', out_name_append='', out_ext='.nii.gz', parallel=False, **kwargs ):
     """Loop through a list of files, apply a function (with a given format) to each, and save with the specified name.
     
-    ** Must integrate niftify() and check that downsample_image (and other fns which use the header, like erode and dilate) will still work. **
-    For niftify: loop_and_save([list], niftify, data_function=X)
-    
     The function must take at least a NIfTI object as input, and return a NIfTI as well. This function loads the NIfTI from the input file_path_list, and saves the result.
     
     Other keyword arguments may be passed to the function using **kwargs (key-worded inputs to this function, e.g. 'factor=2').
@@ -410,6 +397,7 @@ def loop_and_save( file_path_list, function=None, output_directory=None, output_
         ds_files_list = loop_and_save( input_files_list, downsample_image, output_directory=temp_dir, out_name_append='_ds', factor=3 )
         gz_files_list = loop_and_save( input_files_list, nifti_gzip, output_directory= )
         _ = loop_and_save( input_files_list, print_nifti_data, output_directory='', data_function=np.mean)   # must set output_directory='' so the existing file isn't skipped.
+        
     Could use get_files_list(dir) to input the list of files.
     
     The output file path will be in output_directory, named: out_name_prepend + input_name + out_name_append + out_ext. If out_ext is None, the input extension will be used.
@@ -417,6 +405,8 @@ def loop_and_save( file_path_list, function=None, output_directory=None, output_
     If output_directory is left as None, output_subdirectory can be used instead to quickly send to a subdirectory of the existing file's path.
     
     The default behaviour of loop_and_save([file_path_list]) (if you leave function=None and out_ext='.nii.gz') is to replicate nifti_gzip.
+    
+    To do: check downsample_image (and other fns which use the header, like erode and dilate) will still work.
     
     """
     
@@ -458,22 +448,14 @@ def loop_and_save( file_path_list, function=None, output_directory=None, output_
         if not os.path.isfile(output_filepath):
         
             if parallel:
-                
+
                 d = {'file_path': file_path, 'function': function, 'output_filepath': output_filepath}
                 # Expanding **kwargs will create a separate dict; merge them here:
                 d.update(**kwargs)
                 TASKS.append(d)
                 
             else:
-                
                 output_filepath = load_nifti_save(file_path, function, output_filepath, **kwargs)
-                
-                # nifti = nib.load(file_path)
-                # if function is not None:
-                    # new_nifti = function(nifti, **kwargs)
-                # else:
-                    # new_nifti = nifti
-                # quick_save_nifti(new_nifti, output_filepath)
             
         else:
             print("  Output file, {0} already exists!".format(output_filepath))
@@ -505,13 +487,12 @@ def loop_and_print( file_path_list, function, **kwargs ):
     
     Aim for simplicity, so the printed output is clear: that's the point. But the called functions should do the printing, as each will require a different format.
     
-    The function must take at a Numpy array as input, and return something printable. This function loads the NIfTI from the input file_path_list, gets the data part (the Numpy array), and appends the function's output to a list.
+    The function must take a Numpy array as input, and return something printable. This function loads the NIfTI from the input file_path_list, gets the data part (the Numpy array), and appends the function's output to a list.
     
     Other keyword arguments may be passed to the function using **kwargs (key-worded inputs to this function, e.g. 'axis=1').
     
     For example:
         _ = loop_and_print( input_files_list, print_nifti_data, data_function=np.mean)
-    Could use get_files_list() to input the list of files.
     
     """
     
@@ -745,8 +726,6 @@ def normalise_header( input ):
     
 def copy_header( nifti_1, nifti_2 ):
     """Apply the header from nifti_2 to nifti_1. Returns nifti_1 with the header of nifti_2.
-    
-    Was "apply_header()".
     """
     return nib.Nifti1Image(nifti_1.get_data(), nifti_2.get_header().get_sform(), header=nifti_2.get_header())
     # End copy_header() definition
@@ -787,7 +766,7 @@ def convert_mm_to_voxels( mm_input, hdr=None ):
 def get_centre_of_mass( input, hdr=None, do_weighted=True, use_resolution=True ):
     """Returns the centre of mass (centroid) of a 3D NIfTI object, as a Numpy array.
     
-    ** NB this doesn't quite currently work as expected: X seems to be -ve. Possibly down to qfac, but not sure... **
+    ** NB check this works as expected. **
     
     If do_weighted is True (default yes), voxels are weighted by their value (intensity).
     If use_resolution is True (default yes), position is in the same units as the header pixdims (likely mm).
@@ -1246,55 +1225,6 @@ def label_concomp( input, max_to_get=1000 ):
         return sorted_labels, numpatches
     # End of label_concomp() definition
     
-def detatch_threadbare_objects( input, minimum_removal=10 ):
-    """Remove objects larger than a threshold which are attached to larger objects by only a single voxel.
-    
-    ** Experimental.
-    
-    Designed to eliminate small objects which are touching a larger one, but only by a single voxel. The disadvantage of morphological opening here is that more voxels than necessary are lost. This is designed to be a more conservative, shape-preserving "erode, lconcomp, dilate".
-    
-    Run lconcomp, fill, then this, then lconcomp again.
-    
-    * Demonstrate effectiveness by comparing with erode, lconcomp, dilate.
-    
-    """
-
-    # If hdr is None, we've just been given a data structure and that is all that should be returned. If hdr is not None, we've been given a NIfTI-1 image as the input, and we should return one.
-    data, hdr = check_get_nifti_data(input)
-    
-    print("  Attempting to remove small, attached objects ...")
-    
-    # Ensure we're working with binary data (convert to int afterwards, just in case)
-    mask = data > 0
-    mask = mask.astype(int)
-    
-    print("  Getting edge voxel coordinates ...")
-    eroded = erode(mask, -1)
-    edge_voxels = mask - eroded
-    edge_coords = np.asarray(np.ndarray.nonzero(edge_voxels)).T
-    
-    print edge_coords
-    
-    # Cycle through all coordinates (as rows)
-    for row_counter, coordinate in enumerate(edge_coords):
-        print("  Testing edge voxel {0} / {0} ...".format(row_counter+1, np.shape(edge_coords)[1]))
-        
-        # Remove this voxel from the original image
-        mask[coordinate[0],coordinate[1],coordinate[2]] = 0
-        
-        voxels_removed = mask - lconcomp(mask)
-        
-        if np.count_nonzero(voxels_removed) < minimum_removal:
-            # Add the voxel back in
-            mask[coordinate[0],coordinate[1],coordinate[2]] = 1
-    
-    # If we were given a NIfTI-1 image, return a NIfTI; otherwise return just a data cuboid.
-    if hdr:
-        return nib.Nifti1Image(mask, hdr.get_sform(), header=hdr), numpatches
-    else:
-        return mask
-    # End of detatch_threadbare_objects() definition
-    
 def get_roi_about_facet( facet, exclude ):
     """Test voxels within the cuboid defined by a 3D triangular facet.
     
@@ -1453,13 +1383,6 @@ def get_binary_hull( data, min_volume=100 ):
         exclude[:,ymax:,:] = 1
         exclude[:,:,zmax:] = 1
         
-        # We can also place a cuboid inside the hull by finding the midpoints of each facet (triangle) and getting the cuboid which fits inside them all...
-        # NB this could be wrong, dimension-wise...
-        # The largest cuboid we can form will be limited either side of the central point in all dimensions by the maximum value less than the central point and the minimum value greater than the central point.
-        # facet_midpoint_coords = np.mean(point_coords[hull.simplices[:]],1)
-        
-        # ... not finished with this
-        
         # Speedup: we can selectively test voxels around the edge of the hull, by finding the cuboids defined by each triangular simplex. For each simplex, test all voxels within the surrounding cuboid (will be slower for larger simplices). Once all respective cuboids have been tested, we should have a hollow shape, which we can fill, thereby omitting to test all the internal voxels.
         
         print("Testing voxels around each simplex ...")
@@ -1521,7 +1444,7 @@ def test_voxels_within_hull( facet_single_point, hull_mask, normed_normals, norm
             hull_mask[coordinate[0],coordinate[1],coordinate[2]] = 1
             
         # Further speedup: generate internal cuboids;
-        # Also: switch arrays with broadcastingf after testing a range, rather than individual voxels
+        # Also: switch arrays with broadcasting after testing a range, rather than individual voxels
 
     return hull_mask
     # End of test_voxels_within_hull() definition
@@ -1537,13 +1460,9 @@ def dilate_old( input_nifti, iterations=-1 ):
         mm:     > 0
         
     If output_filepath is provided, saves the NIfTI file.
-    
     Binarises the input if necessary and returns a binary data volume the same shape as that of the input, dilated.
-    
     If input is a NIfTI-1 object, returns one with the same header; if input is just the data, returns just data.
-    
     Works with loop_and_save().
-    
     """
 
     data, hdr = check_get_nifti_data(input_nifti)
@@ -1576,11 +1495,8 @@ def erode_old( input, iterations=-1 ):
     """Erode an image a number of iterations.
     
     Binarises the input if necessary and returns a binary data volume the same shape as that of the input, eroded.
-    
     If input is a NIfTI-1 object, returns one with the same header; if input is just the data, returns just data.
-    
     Works with loop_and_save().
-    
     """
 
     data, hdr = check_get_nifti_data(input)
@@ -1692,13 +1608,6 @@ def binarise_label_img( input, label_value ):
 def binarise_label( data, label_value ):
     
     return (data == float(label_value)).astype(int)
-    
-def outer(some_func):
-    def inner(*args, **kwargs):
-        
-        # args are positional arguments: args[0] should therefore be the input image or data
-        return some_func(*args, **kwargs)
-    return inner
     
 def get_binary_volume( input, hdr=None, label_value=None ):
     """Returns either the volume of all voxels > 0, or the volume of a specific label.
@@ -2095,36 +2004,6 @@ def write_csv_data( csv_path, rows_to_write ):
             
     # End of write_csv_data() definition
     
-def check_zero_off_diagonals( matrix, ignore_final_column=False ):
-    """Returns False when any off-diagonal element of an NxN matrix is non-zero.
-    
-    If ignore_final_column is True, does not take translation elements (of a 4x4 homogeneous affine matrix) into account.
-    
-    """
-    
-    rows = np.shape(matrix)[0]
-    cols = np.shape(matrix)[1]
-    
-    if ignore_final_column is True:
-        cols -= 1
-    
-    total = 0.0
-    for r in range(rows):
-        for c in range(cols):
-            if r != c:
-                total = total + matrix[r,c]
-                
-    return total == 0.0
-    # End of check_off_diagonal_elements() definition
-    
-def generate_affine_matrix( xx=1, xy=0, xz=0, yx=0, yy=1, yz=0, zx=0, zy=0, zz=1, tx=0, ty=0, tz=0 ):
-    # Generate a 3D homogeneous affine matrix. By default, identity. You only need to specify the parts which differ from the identity matrix, e.g. generate_affine_matrix(yy=-1).
-    
-    affine = np.array([ (xx, xy, xz, tx), (yx, yy, yz, ty), (zx, zy, zz, tz), (0, 0, 0, 1) ])
-    
-    return affine
-    # End of generate_affine_matrix() definition
-    
 def apply_mask( input, mask=None ):
     """Returns array with the same shape as the input."""
     
@@ -2196,34 +2075,6 @@ def hollow_box( nifti, thickness=1 ):
     
     return nib.Nifti1Image(box_data, nifti.get_sform(), nifti.get_header())
     # End hollow_box() definition
-        
-def gaussian_smooth( input, sigma=-1.0 ):
-    """Returns a smoothed image, having convolved with a Gaussian kernel with the given standard deviation.
-    
-    Input
-    -----
-    sigma:
-        +ve for mm
-        -ve for voxels
-
-    Works with loop_and_save().
-    """
-    # Replicating reg_tools -smoG
-    
-    data, hdr = check_get_nifti_data( input )
-    
-    sigma = convert_mm_to_voxels( sigma, hdr )
-    
-    # Ensure result will be non-binary
-    data = data.astype('float')
-    
-    smoothed_data = ndimage.filters.gaussian_filter(data, sigma)
-    
-    if hdr:
-        return nib.Nifti1Image(smoothed_data, affine=hdr.get_sform(), header=hdr)
-    else:
-        return smoothed_data
-    # End gaussian_smooth() definition
         
 # Plots and images
 # ----------------
@@ -2306,27 +2157,14 @@ def save_fig( directory, name, extension=".png" ):
     return os.path.normpath(os.path.join(directory, save_time + name + extension))
     # End save_fig() definition
     
-def correlate_images( reference, compare_path, file_name_filter, output_directory ):
-    """Compare all the images in compare_path with the reference image.
-    
-    Saves a .CSV with the Pearson's CC of the two images with "file_name_filter" in the first column.
-    
-    If more than one image matches the file_name_filter, different columns will be returned for each image.
-    
-    Also saves a bar graph with different colours for different file_name_filters.
-    
-    Col 0: file_names (- file_name_filter, so repeatable); Col 1 header: file_name_filter; Col 2 header: next file_name_filter; etc.
-    
-    """
-    
 def compare_image_to_multiple(reference_images, input_directory, file_name_filters, extension='.nii.gz'):
-    """Use correlation to compare images (they must all be in the same space) in a input_directory with single input reference_image(s).
+    """Use correlation to compare images (they must all be in the same space) in an input_directory with single input reference_image(s).
     
     reference_images should be a list of NIfTI-1s equal in length to file_name_filters. If you want to compare with just one reference image for all file name filters, repeat it in the list.
     
     The files in input_directory will all be compared and the PMCC output in a .CSV saved to the input_directory.
     
-    If file_name_filters, a list, is specified, then all files in input_directory matching each element of file_name_filters will be compared. If the list has more than one element, there will be multiple columns in the output .CSV, corresponding to each filter.
+    If file_name_filters is a list, then all files in input_directory matching each element of file_name_filters will be compared. If the list has more than one element, there will be multiple columns in the output, corresponding to each filter.
     
     """
     import datetime
@@ -2382,13 +2220,12 @@ def compare_image_to_multiple(reference_images, input_directory, file_name_filte
 # Print information for the user
 # ------------------------------
 
-def notify_script_start( script_name ):
+def notify_script_start( script_name='' ):
     """Give the user some helpful notes at the launch of the script."""
     import time
     time_format = '%H:%M:%S %p on %b %d, %Y (%Z)'
     time_start = time.strftime(time_format)
     alert_user("  MouseMorph script {0} starting at {1}!\n...".format(script_name, time_start))
-    # alert_user("MouseMorph script {0} starting at {1}!\n  Input directory is \t{2}\n  Output directory is \t{3}\n...".format(script_name, time_start, sargs.input_directory, sargs.output_directory))
     
     return time_start
 
@@ -2397,6 +2234,8 @@ def notify_script_complete( script_name, output="NA", time_start=None ):
     import time
     from datetime import datetime
     time_format = '%H:%M:%S %p on %b %d, %Y (%Z)'
+    if time_start is None:
+        time_start = time.strftime(time_format)
     time_stop = time.strftime(time_format)
     time_diff = datetime.strptime(time_stop, time_format) - datetime.strptime(time_start, time_format)
     alert_user("  MouseMorph script {0} completed at {1}!\n  Time taken was {3}.\n  Please check your output ({2}).".format(script_name, time_stop, output, time_diff))
@@ -2444,14 +2283,13 @@ def check_create_csv(csvpath, input_directory, file_name_filter="*", out_name_pr
         
         print("  No CSV exists! A .CSV will be created: {0}. Getting NIfTI files from {1} instead ...".format(csv_file_path, input_directory))
         
-        if not new_empty:
+        if new_empty is False:
         
             # Get list of files (use file_name_filter)
             nifti_files_list = sorted(glob.glob(os.path.join(input_directory, file_name_filter + extension)))
             
             # Get filenames without path
-            # filenames = [(os.path.basename(filepath)).split(os.extsep)[0] for filepath in nifti_files_list]
-            filenames = [get_file_name(filepath) for filepath in nifti_files_list]
+            filenames = [(os.path.basename(filepath)).split(os.extsep)[0] for filepath in nifti_files_list]
             
             # Create a new DataFrame and fill the first column with filenames; the rest are checked and created below
             df = pd.DataFrame(index=range(len(filenames)), columns=['filename'])
@@ -2569,15 +2407,6 @@ def get_existing_files_from_csv(csv_path, input_directory, name_column=0, group_
     return nifti_files_list, existing_file_indices
     # End get_existing_files_from_csv() definition
     
-def fill_dataframe_cell( df, id_column, fill_column, match_string, fill_value=np.NaN ):
-    """Given a Pandas DataFrame, search for match_string in the rows of id_column, and fill the corresponding row in fill_column with fill_value.
-    
-    """
-    
-    
-    
-    # End fill_dataframe_cell() definition
-    
 def filter_list_by_list(list_to_filter, list_to_filter_by):
     """Returns a list consisting of list_to_filter elements which contain text from some element of list_to_filter_by.
     
@@ -2595,6 +2424,15 @@ def filter_list_by_list(list_to_filter, list_to_filter_by):
     
 # Text
 # ----
+
+def generate_affine_matrix( xx=1, xy=0, xz=0, yx=0, yy=1, yz=0, zx=0, zy=0, zz=1, tx=0, ty=0, tz=0 ):
+    """Generate a 3D homogeneous affine matrix.
+    By default, identity.
+    You only need to specify the elements which differ from the identity matrix, e.g. generate_affine_matrix(yy=-1).
+    """
+    
+    return np.array([ (xx, xy, xz, tx), (yx, yy, yz, ty), (zx, zy, zz, tz), (0, 0, 0, 1) ])
+    # End of generate_affine_matrix() definition
 
 def create_affine(trans=[0,0,0], scale=[1,1,1], full_affine=None, output_path=None):
     """Create a 3D homogeneous affine transformation matrix.
@@ -2616,6 +2454,28 @@ def create_affine(trans=[0,0,0], scale=[1,1,1], full_affine=None, output_path=No
     
     return aff
     # End of create_affine() definition
+    
+def check_zero_off_diagonals( matrix, ignore_final_column=False ):
+    """Returns False when any off-diagonal element of an NxN matrix is non-zero.
+    
+    If ignore_final_column is True, does not take translation elements (of a 4x4 homogeneous affine matrix) into account.
+    
+    """
+    
+    rows = np.shape(matrix)[0]
+    cols = np.shape(matrix)[1]
+    
+    if ignore_final_column is True:
+        cols -= 1
+    
+    total = 0.0
+    for r in range(rows):
+        for c in range(cols):
+            if r != c:
+                total = total + matrix[r,c]
+                
+    return total == 0.0
+    # End of check_off_diagonal_elements() definition
 
 def load_affine( input_path, affine_function=None ):
     """Load an affine transformation matrix from a file.
@@ -2632,13 +2492,34 @@ def load_affine( input_path, affine_function=None ):
         return affine_function(aff)
     # End of load_affine() definition
     
-# def invert_affine( input, output_path=None):
-    # if output_path is not None:
-    # return inv_aff
-    # End of invert_affine() definition
-    
 # Statistics
 # ----------
+
+def jaccard_index( nifti_1, nifti_2 ):
+    """Return the Jaccard Index for two binary NIfTI images in the same space.
+    
+    NB Dice score is 2J/(1+J)
+    """
+    
+    data_1 = np.ravel(nifti_1.get_data())
+    data_2 = np.ravel(nifti_2.get_data())
+    
+    if not data_1.shape == data_2.shape:
+        print("Error: NIfTI data objects have different shape: {0}, {1}".format(data_1.shape, data_2.shape))
+        
+    # NB see https://github.com/scikit-learn/scikit-learn/issues/3037 : The built-in jaccard_similarity_score is not valid for two binary NIfTIs.
+    # from sklearn.metrics import jaccard_similarity_score
+    # J = jaccard_similarity_score(data_1, data_2)
+    
+    J = np.sum(np.logical_and(data_1, data_2)) / np.sum(np.logical_or(data_1, data_2)).astype(float)
+    # dice = 2. * J / (1. + J)
+    return J
+    # End of jaccard_index() definition
+    
+def dice_score( nifti_1, nifti_2 ):
+    J = jaccard_index(nifti_1, nifti_2)
+    return 2. * J / (1. + J)
+    # End of dice_score() definition
 
 def mean_stdev_overall( nifti_path_list, mask_directory=None, mask_threshold=0.5 ):
 	"""Returns the mean and standard deviation values of all voxels across all images. Constrainable with a mask from mask_directory (file names must match).
@@ -2831,42 +2712,14 @@ def n_per_arm(std_nii, mean_nii, effect=0.25, sig=0.05, power=0.8, tails='two', 
         return nib.Nifti1Image(ru_data, n_arm.get_sform(), n_arm.get_header())
     # End of n_per_arm() definition
     
-def jaccard_index( nifti_1, nifti_2 ):
-    """Return the Jaccard Index for two binary NIfTI images in the same space.
-    
-    NB Dice score is 2J/(1+J)
-    """
-    
-    data_1 = np.ravel(nifti_1.get_data())
-    data_2 = np.ravel(nifti_2.get_data())
-    
-    if not data_1.shape == data_2.shape:
-        print("Error: NIfTI data objects have different shape: {0}, {1}".format(data_1.shape, data_2.shape))
-        
-    # NB see https://github.com/scikit-learn/scikit-learn/issues/3037 : The built-in jaccard_similarity_score is not valid for two binary NIfTIs.
-    # from sklearn.metrics import jaccard_similarity_score
-    # J = jaccard_similarity_score(data_1, data_2)
-    
-    J = np.sum(np.logical_and(data_1, data_2)) / np.sum(np.logical_or(data_1, data_2)).astype(float)
-    # dice = 2. * J / (1. + J)
-    return J
-    # End of jaccard_index() definition
-    
-def dice_score( nifti_1, nifti_2 ):
-    J = jaccard_index(nifti_1, nifti_2)
-    return 2. * J / (1. + J)
-    # End of dice_score() definition
-    
 # Header-only functions
 # ---------------------
-# These functions take a NIfTI and return a new NIfTI with the header altered. Should work with loop_and_save
+# Take a NIfTI and return a new NIfTI with the header altered.
 
 def apply_affine(nifti, transform_affine):
     """Apply an affine to a NIfTI-1 image.
     
     Should exactly replicate reg_transform -updSform.
-    
-    Works with loop_and_save.
     """
     
     hdr = nifti.get_header()
@@ -2880,44 +2733,15 @@ def apply_affine(nifti, transform_affine):
     
 # Data-only functions
 # -------------------
-# These should be wrapped with niftify(nifti, function_name, **kwargs) if you want to input and return a NIfTI object. NB this is _not_ done with a decorator, as I'd generally like to be able to access each of these functions directly as well.
-
-def niftify_old(nifti, data_function, **kwargs):
-    """Pass the data part of a NIfTI to any function, or function list. Return an altered NIfTI."""
-    
-    # nifti = check_get_nifti(input)
-    
-    hdr = nifti.get_header()
-    new_data = data_function(nifti.get_data(), **kwargs)
-    return nib.Nifti1Image(new_data, hdr.get_sform(), hdr)
-    # End niftify() definition
-    
-def niftify_chain(nifti, data_functions):
-    """Pass the data part of a NIfTI to a list of data-processing functions. Returns an altered NIfTI.
-    
-    If the function requires arguments, use a list with the function name as the first element.
-    
-    E.g. new_nii = niftify_chain(nii, [binarise, [dilate, -1], [erode, -2], lconcomp])
-    
-    * Not yet finished *
-    """
-    
-    # Check we have a list
-    data_functions = get_iterable(data_functions)
-    
-    for fn in data_functions:
-        
-        fn = get_iterable(fn)
-        
-        nifti = niftify(nifti, fn[0])
-    return nifti
+# These are wrapped with niftify(nifti, function_name, **kwargs) to input and return a NIfTI object. NB this is done with a decorator, so each function can be called with just function(nifti). As used by loop_and_save().
     
 def niftify(func):
     """Decorator function for any function requiring only the data part (NumPy ndarray) of a NIfTI image.
     
     The first argument must be recognisable by check_get_nifti_data().
     
-    Returns a NIfTI image."""
+    Returns a NIfTI image.
+    """
     
     def niftify_and_call(*args, **kwargs):
         data, hdr = check_get_nifti_data(args[0])
@@ -2944,11 +2768,7 @@ def absolute( data ):
     
 @niftify
 def binarise( input ):
-    """Return binary mask where all voxels > 0.0 are 1.
-    
-    Works with loop_and_save().
-    Call directly, or with niftify().
-    """
+    """Return binary mask where all voxels > 0.0 are 1."""
     return lower_threshold_bin( input, 0.0 )
     # End binarise() definition
     
@@ -2956,10 +2776,7 @@ def binarise( input ):
 def binarise_using_padding( data, padding_value=0 ):
     """Return binary mask where all voxels not equal to the padding_value are 1.
     
-    (The word "padding" inherited from ITK.
-    
-    Works with loop_and_save().
-    Call directly, or with niftify().
+    (The word "padding" inherited from ITK.)
     """
     
     data[data == padding_value] = 0
@@ -3021,9 +2838,6 @@ def erode( data, iterations=1, structure=None, nonbinary=False ):
 @niftify
 def fill( data ):
     """Convert an input image to binary, and fill any holes.
-    
-    Works with loop_and_save().
-    Call directly, or with niftify().
     """
 
     # data, hdr = check_get_nifti_data(input)
@@ -3036,6 +2850,28 @@ def fill( data ):
     filled_data = ndimage.binary_fill_holes( mask ).astype(int)
     return filled_data
     # End of fill() definition
+    
+@niftify
+def gaussian_smooth( data, sigma=-1.0 ):
+    """Returns a smoothed image, having convolved with a Gaussian kernel with the given standard deviation (sigma).
+    
+    Input
+    -----
+    sigma:
+        +ve for mm; -ve for voxels
+
+    Works with loop_and_save().
+    """
+    # Replicating reg_tools -smoG
+    
+    sigma = convert_mm_to_voxels( sigma, hdr )
+    
+    # Ensure result will be non-binary
+    data = data.astype('float')
+    
+    smoothed_data = ndimage.filters.gaussian_filter(data, sigma)
+    return smoothed_data
+    # End gaussian_smooth() definition
     
 @niftify
 def get_timepoint( data, tp=0 ):
@@ -3075,9 +2911,6 @@ def grey_complement( data ):
     """Get the greyscale complement.
     
     Returns the max(data) - data at each voxel.
-    
-    Works with loop_and_save().
-    
     """
     max = np.max(data)
     return max - data
@@ -3086,9 +2919,6 @@ def grey_complement( data ):
 @niftify
 def invert( data, verbose=False ):
     """Invert a binary NIfTI image or data array.
-    
-    Works with loop_and_save().
-    
     """
     # Ensure we're working with binary data (convert to int afterwards, just in case)
     mask = data > 0
@@ -3106,28 +2936,23 @@ def linear_map( values, new_min=0.0, new_max=1.0 ):
     """Return a NumPy array of linearly scaled values between new_min and new_max.
     
     Equivalent to Matlab's mat2gray, I believe.
-    
-    Call directly, or with niftify().
     """
     
     new_values = (((values - values.min()) * (new_max - new_min)) / (values.max() - values.min())) + new_min
-    
+
     return new_values
     # End linear_map() definition
     
 @niftify
-def lower_threshold( data, threshold=0.0 ):
-    """Set all voxels < threshold to 0 (does not binarise output).
+def lower_threshold( data, threshold=0.0, new_value=0.0 ):
+    """Set all voxels < threshold to a new_value (default 0) (does not binarise output).
     
-    Works with loop_and_save().
-    Call directly, or with niftify().
+    To do: accept percentages of the maximum.
     """
-    # Alternative might be to set all voxels < threshold to the threshold value, or to accept percentages of the maximum
 
-    # data, hdr = check_get_nifti_data(input)
     print "  Thresholding at: {0}".format(threshold)
     low_indices = data < threshold
-    data[low_indices] = 0.0
+    data[low_indices] = new_value
     
     return data
     # End lower_threshold() definition
@@ -3135,9 +2960,6 @@ def lower_threshold( data, threshold=0.0 ):
 @niftify
 def lower_threshold_bin( data, threshold=0.0 ):
     """Set all voxels < threshold to 0 (binary output).
-    
-    Works with loop_and_save().
-    Call directly, or with niftify().
     """
     
     # data, hdr = check_get_nifti_data(input)
@@ -3151,16 +2973,13 @@ def lower_threshold_bin( data, threshold=0.0 ):
     # End lower_threshold_bin() definition
     
 @niftify
-def power_n( data, power=2.0, hdr_1=None, verbose=False ):
+def power_n( data, power=2.0, verbose=False ):
     """Returns the voxel-wise power of either a data array or a NIfTI-1 image object.
     
     To get the nth root, use 1/power.
     nth root of either a data array or a NIfTI image object.
     
-    E.g. root_n(nii, 3) returns a NIfTI image whose voxel values are cube rooted.
-    
-    Works with loop_and_save().
-    
+    E.g. power_n(nii, 1./3) returns a NIfTI image whose voxel values are cube rooted.
     """
     
     if verbose:
@@ -3175,9 +2994,6 @@ def power_n( data, power=2.0, hdr_1=None, verbose=False ):
 @niftify
 def log( data, base=np.e, verbose=False ):
     """Returns the voxel-wise logarithm (default natural log: base e) of either a data array or a NIfTI-1 image object.
-    
-    Works with loop_and_save().
-    
     """
     
     if verbose:
@@ -3192,7 +3008,7 @@ def log( data, base=np.e, verbose=False ):
     
 @niftify
 def n_power( data, value=np.e ):
-    """Just like power_n, except value is raised to the power of the voxels in a NIfTI image.
+    """Just like power_n, except input value is raised to the power of the voxels in a NIfTI image.
     
     value^[NIfTI voxels] (voxel-wise).
     
@@ -3204,9 +3020,6 @@ def n_power( data, value=np.e ):
 @niftify
 def remove_nans(data, replacement_value=0.0):
     """Remove all NaNs from a NIfTI image, and replace with another value (will convert to np.float).
-    
-    Works with loop_and_save().
-    Call directly, or with niftify().
     """
     
     print("  Replacing {0} NaNs with {1} ...".format(np.count_nonzero(np.isnan(data)), replacement_value))
@@ -3220,9 +3033,6 @@ def remove_nans(data, replacement_value=0.0):
 @niftify
 def replace_values(data, search_value=np.nan, replacement_value=0.0):
     """Replace values matching search_value in data with replacement_value.
-    
-    Works with loop_and_save().
-    Call directly, or with niftify().
     """
     
     print("  Replacing all '{0}'s in data with '{1}' ...".format(search_value, replacement_value))
@@ -3254,6 +3064,8 @@ def trim_intensity_extremes( data, percentile=5.0, max_to_zero=True ):
 @niftify
 def upper_threshold( data, threshold=0.0, new_max=0.0 ):
     """Set all voxels > threshold to new_max (does not binarise output).
+    
+    new_max is the replacement maximum value.
     
     Works with loop_and_save().
     Call directly, or with niftify().
@@ -3349,36 +3161,24 @@ def cnr(foreground, background, noise):
     # End cnr() definition
     
 def snr(signal, noise):
-    """Report SNR. Returns 3 SNR values."""
+    """Report SNR. Returns 3 SNR values.
+    
+    References:
+    [1] MRI From Picture to Proton, p. 204.
+    [2] http://www.mr-tip.com/serv1.php?type=db1&dbs=SNR . Magnotta et al. (2006) calculate SNR with this formula, but stick to GM.
+    """
     
     print("  Mean signal: {0}; mean noise: {1}".format(np.mean(signal), np.mean(noise)))
     # print("  signal shape: {0}; noise shape: {1}".format(signal_data.shape, noise.shape))
     
-    snr_1 = 0.66 * np.mean(signal) / np.std(noise)           # MRI From Picture to Proton, p. 204.
+    snr_1 = 0.66 * np.mean(signal) / np.std(noise)           # [1]
     snr_2 = 0.66 * np.mean(signal) / (0.7979 * np.mean(noise))
-    snr_MRTIP = np.mean(signal) / np.std(noise)              # http://www.mr-tip.com/serv1.php?type=db1&dbs=SNR . Magnotta et al. (2006) calculate SNR with this formula, but stick to GM.
+    snr_MRTIP = np.mean(signal) / np.std(noise)              # [2]
     
     print("  SNR 1 (0.66): {0}; SNR 2 (0.66/0.7979): {1}; SNR (MR-TIP): {2}".format(snr_1, snr_2, snr_MRTIP))
     
     return snr_1, snr_2, snr_MRTIP
     # End snr() definition
-    
-def get_probabilistic_function( input, probabilistic_mask, function=None ):
-    """
-    
-    """
-    
-    data, _ = check_get_nifti_data(input)
-    prob_data, _ = check_get_nifti_data(probabilistic_mask)
-    
-    if function is not None:
-    
-        return function( multiply(data, prob_data) )
-        
-    else:
-        print("You must specify a function argument to work with NIfTI data, for example, 'np.mean'")
-        return None
-    # End probabilistic_function() definition
     
 # Functions which work with NIfTI objects directly
 # ------------------------------------------------
@@ -3389,9 +3189,7 @@ def get_nifti_timepoint( nifti, tp=0 ):
     If input is 4D, output will be 3D. If 3D, will be 2D (etc.)
     
     This saves memory by not loading the full ND data array; only the timepoint requested is loaded into memory.
-    
     See also get_timepoint().
-    
     Ref:
     [1]: http://nipy.org/nibabel/images_and_memory.html
     """
@@ -3410,17 +3208,14 @@ def get_nifti_timepoint( nifti, tp=0 ):
 # -----------------------------------
 
 def niftk_seg_EM(input_path, output_path, mask_path=None, string_args=None):
-    """Just call seg_EM
+    """Just call seg_EM.
     
     Input, masking and output are handled. Bundle all other arguments into string_args, e.g.:
     string_args=r"-priors 1 C:\test.nii.gz"
     
     NB: since string_args is .split(',') on commas, if any paths in string_args contain a comma, they will be split and this won't work.
-    
-    I think this is compatible with loop_and_path...
     """
-    
-    # Get paths to NiftK functions
+
     nk = init_niftk()
     
     calling_list = [nk.seg_EM,
@@ -3445,12 +3240,9 @@ def niftk_seg_EM(input_path, output_path, mask_path=None, string_args=None):
 def niftk_reg_aladin(reference_path, floating_path, output_path, affine_output_path=None, ref_mask_path=None, flo_mask_path=None, string_args=None):
     """Just call reg_aladin
     
-    I think this is compatible with loop_and_path...
-    
-    ! Not yet ready.
+    ! Not complete.
     """
     
-    # Get paths to NiftK functions
     nk = init_niftk()
     
     calling_list = [nk.reg_aladin,
@@ -3481,11 +3273,8 @@ def niftk_reg_aladin(reference_path, floating_path, output_path, affine_output_p
     # End niftk_reg_aladin() definition
 
 def niftk_reg_f3d(reference_path, floating_path, output_path, affine_input_path=None, ref_mask_path=None, flo_mask_path=None, string_args=None):
-    """Just call reg_f3d.
+    """Call reg_f3d."""
     
-    """
-    
-    # Get paths to NiftK functions
     nk = init_niftk()
     
     calling_list = [nk.reg_f3d,
@@ -3513,11 +3302,8 @@ def niftk_reg_f3d(reference_path, floating_path, output_path, affine_input_path=
     # End niftk_reg_f3d() definition
     
 def niftk_reg_jacobian(reference_path, transformation_path, output_path, log=False):
-    """Just call reg_f3d.
+    """Call reg_jacobian."""
     
-    """
-    
-    # Get paths to NiftK functions
     nk = init_niftk()
     
     calling_list = [nk.reg_jacobian,
@@ -3538,13 +3324,11 @@ def niftk_reg_jacobian(reference_path, transformation_path, output_path, log=Fal
     # End niftk_reg_jacobian() definition
     
 def niftk_reg_resample(reference_path, floating_path, transformation_path, output_path, interpolation=1):
-    """Just call reg_resample.
+    """Call reg_resample.
     
     interpolation: 0: NN; 1: (tri)linear (default); 2: cubic
-    
     """
     
-    # Get paths to NiftK functions
     nk = init_niftk()
     
     calling_list = [nk.reg_resample,
@@ -3570,7 +3354,6 @@ def niftk_average_images(input_list, output_path):
     If you don't need to save output, use average_nifti_list()
     """
     
-    # Get paths to NiftK functions
     nk = init_niftk()
     
     calling_list = [nk.reg_average,
@@ -3587,16 +3370,10 @@ def niftk_average_images(input_list, output_path):
     
 def niftk_make_isotropic( input_path, output_path ):
     """Given a path to a NIfTI, save a NIfTI with approximately isotropic voxels.
-    Works with loop_and_path.
     
-    Currently uses reg_tools; the below not yet implemented.
-    
-    # Assumes 3D data.
-    # Uses the minimum existing voxel side size and adjusts the rest if the fall outside a given sensitivity.
-    # The sensitivity factor (default 0.1) allows you to ignore small differences in voxel size.
+    Currently uses reg_tools.
     """
     
-    # Get paths to NiftK functions
     nk = init_niftk()
     
     calling_list = [nk.reg_tools,
@@ -3632,13 +3409,11 @@ def subprocess_call_and_log(calling_list, log_directory=None):
         f_errlog = open(error_logfile, 'w')
         
         subprocess.call(calling_list, stdout=f_log, stderr=f_errlog)
-        
         f_log.close()
         f_errlog.close()
         
     else:
         subprocess.call(calling_list)
-    
     # End subprocess_call_and_log() definition
     
 def function_star(list):
@@ -3651,11 +3426,14 @@ def function_star(list):
     
 # Set up NiftK
 def init_niftk():
-    """Usage: nk = init_niftk()"""
+    """Get paths to NiftK functions.
+    
+    Usage: nk = init_niftk()
+    """
     return mm_niftk.MM_Niftk()
 
 def main():
-    """Mousemorph functions file."""
+    """Mousemorph functions."""
     
     alert_user("There is not much point running this module directly; import it with \"import mm_functions as mmfn\" and use the functions defined within like this:\n\n\tnifti_c = mmfn.add(nifti_a, nifti_b)\n\t...")
 
