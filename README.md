@@ -26,7 +26,7 @@ Developed at the [UCL Centre for Medical Image Computing (**CMIC**)][cmic] and t
 If you are interested in using MouseMorph to assist a phenotyping study, please get in touch!
 
 ### Multiple mouse brain MRI
-- See the brain holder in this repository, or at [Figshare](https://figshare.com/articles/CABI_Mouse_Brain_Holder/1290771/1) (please cite: https://dx.doi.org/10.6084/m9.figshare.1290771.v1)
+- See the brain holder in this repository, or at [Figshare](https://figshare.com/articles/CABI_Mouse_Brain_Holder/1290771) (please cite: https://dx.doi.org/10.6084/m9.figshare.1290771)
 
 ## Links
 - [UCL Centre for Medical Image Computing (CMIC)][cmic]
