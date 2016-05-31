@@ -904,6 +904,19 @@ def average_nifti_list(input_path_list):
     return divide(add_nifti_list(input_path_list), np.float(len(input_path_list)))
     # End average_nifti_list() definition
     
+def median_nifti_list(input_path_list):
+    """Finds the voxel-wise median for a group of NIfTI files.
+    Images must be the same shape.
+    The output image header will be based upon the first NIfTI in the list.
+    """
+    
+    ex_nii = nib.load(input_path_list[0])
+    stack_dim = len(ex_nii.get_data().shape)
+    median_data = np.median(mmfn.stack_nifti_list(input_path_list).get_data(), stack_dim)
+    
+    return nib.Nifti1Image(median_data, ex_nii.get_affine(), ex_nii.get_header())
+    # End median_nifti_list() definition
+    
 def stack_nifti_list(input_path_list):
     """Based upon the first NIfTI in a list of files (given file paths), stacks NIfTIs in the N+1th dimension.
     
