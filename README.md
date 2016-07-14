@@ -44,7 +44,7 @@ Multi-subject atlases are preferred.
 - [NUS Mouse Atlas (Singapore)](http://www.bioeng.nus.edu.sg/cfa/mouse_atlas.html)
 - [MRM NeAt Mouse Atlas (Florida)](http://brainatlas.mbi.ufl.edu/)
 
-© 2014 Nick Powell and [University College London](http://www.ucl.ac.uk/), UK. (License)[LICENSE].
+© 2014 Nick Powell and [University College London](http://www.ucl.ac.uk/), UK. (License)[https://github.com/nmpowell/mousemorph/blob/master/LICENSE].
 
 [mm_poster]: docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf
 [cmic]: http://cmic.cs.ucl.ac.uk/ "UCL Centre for Medical Image Computing"
