@@ -37,9 +37,9 @@ If you are interested in using MouseMorph to assist a phenotyping study, please 
 
 ## Publications
 MouseMorph has been used in several peer-reviewed publications:
-- Powell, NM., Modat, M., Cardoso, MJ., Ma, D., Holmes, HE., Yu, Y., O’Callaghan, J., Cleary, JO., Sinclair, B., Wiseman, FK., Tybulewicz, VLJ., Fisher, EMC., Lythgoe, MF., Ourselin, S. (2016). ***Fully-automated µMRI morphometric phenotyping of the Tc1 mouse model of Down syndrome.*** PLoS ONE 11(9): e0162974. doi:10.1371/journal.pone.0162974
-- Holmes, HE., Colgan, N., Ismail, O., Ma, D., Powell, NM., O’Callaghan, JM., Harrison, IF., Johnson, RA., Murray, TK., Ahmed, Z., Heggenes, M., Fisher, A., Cardoso, MJ., Modat, M., Walker-Samuel, S., Fisher, EMC., Ourselin, S., O’Neill, MJ., Wells, JA., Collins, EC., Lythgoe, MF. (2016). ***Imaging the accumulation and suppression of tau pathology using multi-parametric MRI.*** Neurobiology of Aging. doi:10.1016/j.neurobiolaging.2015.12.001
-- Wells, JA., O’Callaghan, JM., Holmes, HE., Powell, NM., Johnson, RA., Siow, B., Torrealdea, F., Ismail, O., Walker-Samuel, S., Golay, X., Rega, M., Richardson, S., Modat, M., Cardoso, MJ., Ourselin, S., Schwarz, AJ., Ahmed, Z., Murray, TK., O’Neill, MJ., Collins, EC., Colgan, N., Lythgoe, MF. (2015). ***In vivo imaging of tau pathology using multi-parametric quantitative MRI.*** NeuroImage, 111, 369–378. doi:10.1016/j.neuroimage.2015.02.023
+- Powell, NM., Modat, M., Cardoso, MJ., Ma, D., Holmes, HE., Yu, Y., O’Callaghan, J., Cleary, JO., Sinclair, B., Wiseman, FK., Tybulewicz, VLJ., Fisher, EMC., Lythgoe, MF., Ourselin, S. (2016). ***Fully-automated µMRI morphometric phenotyping of the Tc1 mouse model of Down syndrome.*** PLoS ONE 11(9): e0162974. [doi:10.1371/journal.pone.0162974][tc1_paper]
+- Holmes, HE., Colgan, N., Ismail, O., Ma, D., Powell, NM., O’Callaghan, JM., Harrison, IF., Johnson, RA., Murray, TK., Ahmed, Z., Heggenes, M., Fisher, A., Cardoso, MJ., Modat, M., Walker-Samuel, S., Fisher, EMC., Ourselin, S., O’Neill, MJ., Wells, JA., Collins, EC., Lythgoe, MF. (2016). ***Imaging the accumulation and suppression of tau pathology using multi-parametric MRI.*** Neurobiology of Aging. [doi:10.1016/j.neurobiolaging.2015.12.001][tg4510_holmes_paper]
+- Wells, JA., O’Callaghan, JM., Holmes, HE., Powell, NM., Johnson, RA., Siow, B., Torrealdea, F., Ismail, O., Walker-Samuel, S., Golay, X., Rega, M., Richardson, S., Modat, M., Cardoso, MJ., Ourselin, S., Schwarz, AJ., Ahmed, Z., Murray, TK., O’Neill, MJ., Collins, EC., Colgan, N., Lythgoe, MF. (2015). ***In vivo imaging of tau pathology using multi-parametric quantitative MRI.*** NeuroImage, 111, 369–378. [doi:10.1016/j.neuroimage.2015.02.023][tg4510_wells_paper]
 
 ## Links
 - [UCL Centre for Medical Image Computing (CMIC)][CMIC]
@@ -61,6 +61,8 @@ Multi-subject atlases are preferred.
 
 [mm_poster]: docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf
 [tc1_paper]: http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0162974
+[tg4510_holmes_paper]: http://www.sciencedirect.com/science/article/pii/S0197458015006053
+[tg4510_wells_paper]: http://www.sciencedirect.com/science/article/pii/S105381191500124X
 [CMIC]: http://cmic.cs.ucl.ac.uk/ "UCL Centre for Medical Image Computing"
 [CABI]: http://www.ucl.ac.uk/cabi "UCL Centre for Advanced Biomedical Imaging"
 [ashb_vbm_2000]: http://www.fil.ion.ucl.ac.uk/~karl/Voxel-Based%20Morphometry.pdf "(PDF) Ashburner (2000): Voxel-Based Morphometry --- The Methods"
