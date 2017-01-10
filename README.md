@@ -1,7 +1,7 @@
 MouseMorph
 ==========
 
-_We're not quite done here, but please get in touch if you are interested: nicholas.powell.11@ucl.ac.uk ..._
+_We're not quite done here, but please get in touch if you are interested: nicholas.powell.11@ucl.ac.uk._
 
 Tools for MRI mouse brain morphometry.
 
@@ -20,7 +20,7 @@ Most of these steps are atlas-based (requiring prior knowledge). A few mouse atl
 
 Developed at the [UCL Centre for Medical Image Computing (CMIC)][CMIC] and the [UCL Centre for Advanced Biomedical Imaging (CABI)][CABI] by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
 
-[![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster] [![Paper thumbnail; click for PDF](docs/paper_tc1_thumbnail.png "'Fully-Automated μMRI Morphometric Phenotyping of the Tc1 Mouse Model of Down Syndrome' Paper thumbnail; (external link)")][tc1_paper]
+[![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster] [![Powell et al. paper thumbnail (external link)](docs/paper_tc1_thumbnail.png "'Fully-Automated μMRI Morphometric Phenotyping of the Tc1 Mouse Model of Down Syndrome' paper thumbnail (external link)")][tc1_paper] [![paper thumbnail (external link)](docs/paper_holmes_thumbnail.png "Holmes et al. paper thumbnail (external link)")][tg4510_holmes_paper] [![paper thumbnail (external link)](docs/paper_wells_thumbnail.png "Wells et al. paper thumbnail (external link)")][tg4510_wells_paper]
 
 ## Phenotyping
 If you are interested in using MouseMorph to assist a phenotyping study, please get in touch!
