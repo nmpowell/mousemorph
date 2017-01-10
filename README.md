@@ -20,7 +20,7 @@ Most of these steps are atlas-based (requiring prior knowledge). A few mouse atl
 
 Developed at the [UCL Centre for Medical Image Computing (**CMIC**)][CMIC] and the [UCL Centre for Advanced Biomedical Imaging (**CABI**)][CABI] by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
 
-[![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster]
+[![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster] [![Paper thumbnail; click for PDF](docs/paper_tc1_thumbnail.png "'Fully-Automated μMRI Morphometric Phenotyping of the Tc1 Mouse Model of Down Syndrome' Paper thumbnail; (external link)")][tc1_paper]
 
 ## Phenotyping
 If you are interested in using MouseMorph to assist a phenotyping study, please get in touch!
@@ -54,6 +54,7 @@ Multi-subject atlases are preferred.
 © 2014 Nick Powell and [University College London](http://www.ucl.ac.uk/), UK. [License](https://github.com/nmpowell/mousemorph/blob/master/LICENSE).
 
 [mm_poster]: docs/Nick_Powell-20131016-MouseMorph_MRI_Mouse_Phenotyping-Poster_A0_portrait.pdf
+[tc1_paper]: http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0162974
 [CMIC]: http://cmic.cs.ucl.ac.uk/ "UCL Centre for Medical Image Computing"
 [CABI]: http://www.ucl.ac.uk/cabi "UCL Centre for Advanced Biomedical Imaging"
 [ashb_vbm_2000]: http://www.fil.ion.ucl.ac.uk/~karl/Voxel-Based%20Morphometry.pdf "(PDF) Ashburner (2000): Voxel-Based Morphometry --- The Methods"
