@@ -18,7 +18,7 @@ The primary distinction from clinically-focussed tools like [SPM](http://www.fil
 
 Most of these steps are atlas-based (requiring prior knowledge). A few mouse atlases, fulfilling this requirement, are freely available to download (see links below). We aim to release more. For a further introduction, see the [**poster**][mm_poster]. For links to open and free wild-type mouse brain MRI data, see below.
 
-Developed at the [UCL Centre for Medical Image Computing (**CMIC**)][CMIC] and the [UCL Centre for Advanced Biomedical Imaging (**CABI**)][CABI] by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
+Developed at the [UCL Centre for Medical Image Computing (CMIC)][CMIC] and the [UCL Centre for Advanced Biomedical Imaging (CABI)][CABI] by Nick Powell (nicholas.powell.11@ucl.ac.uk) and others.
 
 [![MouseMorph poster thumbnail; click for PDF](docs/mousemorph_poster_thumbnail.png "MouseMorph poster thumbnail; click for PDF")][mm_poster] [![Paper thumbnail; click for PDF](docs/paper_tc1_thumbnail.png "'Fully-Automated μMRI Morphometric Phenotyping of the Tc1 Mouse Model of Down Syndrome' Paper thumbnail; (external link)")][tc1_paper]
 
@@ -34,6 +34,12 @@ If you are interested in using MouseMorph to assist a phenotyping study, please 
 3. You also need [NiBabel]. From a command line, run: `pip install nibabel`
 3. [Download the MouseMorph repository as a .zip](https://github.com/nmpowell/mousemorph/archive/master.zip), and extract
 4. From the mousemorph directory, run: `python setup.py install`
+
+## Publications
+MouseMorph has been used in several peer-reviewed publications:
+- Powell, NM., Modat, M., Cardoso, MJ., Ma, D., Holmes, HE., Yu, Y., O’Callaghan, J., Cleary, JO., Sinclair, B., Wiseman, FK., Tybulewicz, VLJ., Fisher, EMC., Lythgoe, MF., Ourselin, S. (2016). ***Fully-automated µMRI morphometric phenotyping of the Tc1 mouse model of Down syndrome.*** PLoS ONE 11(9): e0162974. doi:10.1371/journal.pone.0162974
+- Holmes, HE., Colgan, N., Ismail, O., Ma, D., Powell, NM., O’Callaghan, JM., Harrison, IF., Johnson, RA., Murray, TK., Ahmed, Z., Heggenes, M., Fisher, A., Cardoso, MJ., Modat, M., Walker-Samuel, S., Fisher, EMC., Ourselin, S., O’Neill, MJ., Wells, JA., Collins, EC., Lythgoe, MF. (2016). ***Imaging the accumulation and suppression of tau pathology using multi-parametric MRI.*** Neurobiology of Aging. doi:10.1016/j.neurobiolaging.2015.12.001
+- Wells, JA., O’Callaghan, JM., Holmes, HE., Powell, NM., Johnson, RA., Siow, B., Torrealdea, F., Ismail, O., Walker-Samuel, S., Golay, X., Rega, M., Richardson, S., Modat, M., Cardoso, MJ., Ourselin, S., Schwarz, AJ., Ahmed, Z., Murray, TK., O’Neill, MJ., Collins, EC., Colgan, N., Lythgoe, MF. (2015). ***In vivo imaging of tau pathology using multi-parametric quantitative MRI.*** NeuroImage, 111, 369–378. doi:10.1016/j.neuroimage.2015.02.023
 
 ## Links
 - [UCL Centre for Medical Image Computing (CMIC)][CMIC]
