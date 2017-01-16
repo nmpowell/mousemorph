@@ -20,35 +20,6 @@ Notes
 
 # Optionally orient any files which correspond to the data, using mm_orient_corresponding_files.py
 
-To do
------
-- add: rigid registration to Waxholm space, such that origin is at anterior commisure.
-- add: alternatively, Final alignment to origin=CoM
-- add: any principal axis combination: 12; not just 4.
-- add: roll about any axis, assuming symmetry could be in the z/x or y/x planes as well.
-- edit: final steps are convoluted
-- add: translate first image to the origin (an alternative: rigidly register to atlas in a given space)
-- add: references
-- Test against multiple atlases or subset images
-- lots of "final_" images and files, when they aren't.
-- BUG: run on its own output, this fails. Fails to take original header into account, I think. To fix this, I think all I need to check is that the result of the principal affine output remains the same whatever.
-- Separate mm_align_common_coords.py: standalone script too (it's just a function)
-- Optionally delete large files from the temp directory without affecting quick rerunability
-- Rerun instantly if previously run
-- NB check whether future NiftyReg versions automatically update the header after reg_aladin affine registration...
-- Annoyance: at the end, this text appears in Anaconda: "C:\Anaconda\lib\site-packages\scipy\ndimage\interpolation.py:532: UserWarning: From scipy 0.13.0, the output shape of zoom() is calculated with round() instead of int() - for these inputs the size of the returned array has changed.
-  "the returned array has changed.", UserWarning)"
-- avoid globals
-- BUG: not yet robust to: large amounts of background noise; large amounts of high-signal extraneous material (see Arun's anatomical reference image; Ian H's images; Jess S's images...)
-- BUG: I think -t (for all same orientation) is currently saving all images as the original image.
-- BUG: when resampling the atlas image (and checking corresponding images with that image), if pixdims are not isotropic, we'll both really lose image quality and possibly have incorrect final dimensions. As per mm_orient_corresponding_files.py.
-- add: additional rotation affines (in case of longest axis not being AP) not sorted yet.
-
-----------------------
-Change log
-----------
-2015-02-14
-    - improved final translation to image centre or centroid. Should now be able to calculate any required affine transformation matrix.
 """
 
 import os
@@ -1393,20 +1364,7 @@ def go(args=None):
                     
                     
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
                     
                     # user_choice = raw_input("Candidate files generated are: \n{0} \nFrom the above list of files, please input the number (1 - 12) of the file whose antero-posterior axis (AP, or nose-tail) best-matches the image 'Y' axis, then press [Enter]: ".format())
         
@@ -1429,13 +1387,7 @@ def go(args=None):
                         mmfn.alert_user("Choose an atlas image from:\n{0},\n and copy it to your atlas directory, {1} !".format(candidate_list, atlas_directory))
                         mmfn.wait_for_files(atlas_directory, 1)
         
-        
-        
-        
-        
-        
-        
-        
+
         
         
 def voxels_are_isotropic( nifti_header ):
